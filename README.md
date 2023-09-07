@@ -30,7 +30,7 @@ At the end of this project, learners should understand:
 
 1. Clone the repository:
 ```
-git clone https://github.com/your_github_username/simple_shell.git
+git clone https://github.com/Emminex23/simple_shell.git
 ```
 2. Navigate to the project directory:
 ```
