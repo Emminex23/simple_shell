@@ -15,7 +15,7 @@
 #define BUFFERSIZE 1024
 
 /*Prototypes*/
-int exe(char* command);
+int exe(char *command);
 extern char **environ;
 
 
