@@ -58,3 +58,16 @@ int _strcmp(const char *str1, const char *str2)
 	}
 	return (*(unsigned char *)str1 - *(unsigned char *)str2);
 }
+
+/**
+ * clean_up_before_exit - Function to clean up before exiting
+ *
+ * Return: None
+ */
+void clean_up_before_exit(void)
+{
+	/*Free any allocated resources here*/
+
+	/*Then call exit.*/
+	exit(0);
+}

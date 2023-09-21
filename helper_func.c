@@ -11,6 +11,11 @@ int _strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t i = 0;
 
+	if (s1 == NULL || s2 == NULL)
+	{
+		return (-1);
+	}
+
 	while (i < n && (s1[i] || s2[i]))
 	{
 		if (s1[i] != s2[i])
@@ -29,22 +34,25 @@ int _strncmp(const char *s1, const char *s2, size_t n)
  */
 char *_strdup(const char *src)
 {
+	char *dup;
 	size_t i, len = _strlen(src);
-	char *dup = (char *)malloc(len + 1);
 
 	if (src == NULL)
 	{
 		return (NULL);
 	}
+	dup = (char *)malloc(len + 1);
 
-	if (dup)
+	if (dup == NULL)
 	{
-		for (i = 0; i < len; i++)
-		{
-			dup[i] = src[i];
-		}
-		dup[len] = '\0';
+		return (NULL);
 	}
+
+	for (i = 0; i < len; i++)
+	{
+		dup[i] = src[i];
+	}
+	dup[len] = '\0';
 	return (dup);
 }
 
@@ -54,24 +62,25 @@ char *_strdup(const char *src)
  * @dest: destination
  * @n: number of bytes
  *
- * Return: dest
+ * Return: 0 if successful, -1 otherwise
  */
-void *_memcpy(void *dest, const void *src, size_t n)
+int _memcpy(void *dest, const void *src, size_t n)
 {
+
 	size_t i;
 	char *d = (char *)dest;
 	const char *s = (const char *)src;
 
-	if (!d || !s)
+	if (dest == NULL || src == NULL)
 	{
-		return (NULL);
+		return (-1);
 	}
 
 	for (i = 0; i < n; i++)
 	{
 		d[i] = s[i];
 	}
-	return (dest);
+	return (0);
 }
 
 /**
@@ -104,5 +113,5 @@ char *_strncpy(char *dest, const char *src, size_t n)
  */
 void exit_shell(void)
 {
-	exit(EXIT_SUCCESS);
+	clean_up_before_exit();
 }
