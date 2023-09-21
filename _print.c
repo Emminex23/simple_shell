@@ -44,8 +44,8 @@ void print_env(void)
 
 /**
  * _strcmp - Function that copies a string.
- * @s1: string 1
- * @s2: string 2
+ * @str1: string 1
+ * @str2: string 2
  *
  * Return: dest
  */
