@@ -8,10 +8,10 @@
 int exe(char *command)
 {
 	pid_t pid; /*pid data type*/
-	int state;
-
+	int state, count = 0;
 	char *input[MAX]; /*Array holds the command and its argument*/
-	int count = 0;
+	char resolved_path[BUFFERSIZE];
+
 	char *term = strtok(command, " \t\n");
 
 	while (term != NULL && count < (MAX - 1))
@@ -21,6 +21,16 @@ int exe(char *command)
 		term = strtok(NULL, " \t\n");
 	}
 	input[count] = NULL; /* indicates the end of arguments*/
+	if (input[0][0] != '/')
+	{
+		if (findpath(input[0], resolved_path, BUFFERSIZE) == -1)
+		{
+			return (-1);
+		}
+		input[0] = resolved_path;
+	}
+	if (access(input[0], X_OK) == -1)
+		return (-1);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -33,14 +43,8 @@ int exe(char *command)
 			perror("Command execution failed");
 			exit(EXIT_FAILURE);
 		}
-	} else
-	{
-		waitpid(pid, &state, 0);
-		if (WIFEXITED(state) && WEXITSTATUS(state) == 0)
-		{
-			return (0);
-		}
-		return (-1);
+		exit(EXIT_FAILURE);
 	}
-	return (0);
+	waitpid(pid, &state, 0);
+	return ((WIFEXITED(state) && WEXITSTATUS(state) != 0) ? -1 : 0);
 }

@@ -13,33 +13,23 @@ int main(void)
 
 	while (1)
 	{
-		printf("my_simple_shell$ ");
+		_print("my_simple_shell$ ");
 		fflush(stdout);
 		bytes_read = getline(&buffer, &bufsize, stdin);
+
 		if (bytes_read == -1)
 		{
-			if (feof(stdin))
-			{
-				printf("\n");
-				exit(EXIT_SUCCESS);
-			} else
-			{
-				perror("my_simple_shell");
-				exit(EXIT_FAILURE);
-			}
+			handle_read_error();
 		}
+
 		if (buffer[bytes_read - 1] == '\n')
 		{
 			buffer[bytes_read - 1] = '\0';
 		}
-		if (strlen(buffer) > 0)
-		{
-			int status = exe(buffer);
 
-			if (status == -1)
-			{
-				printf("%s: command not found\n", buffer);
-			}
+		if (_strlen(buffer) > 0)
+		{
+			handle_command(buffer);
 		}
 		free(buffer);
 		buffer = NULL;
