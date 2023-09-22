@@ -34,6 +34,11 @@ int main(int argc, char *argv[])
 		}
 		if (_strlen(buffer) > 0)
 			handle_command(buffer, argv[0], line_number);
+		if (!isatty(STDIN_FILENO))
+		{
+			free(buffer);
+			break;
+		}
 		free(buffer);
 		buffer = NULL;
 	}
