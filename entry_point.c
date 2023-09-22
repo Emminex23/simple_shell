@@ -26,17 +26,23 @@ int main(int argc, char *argv[])
 		bytes_read = getline(&buffer, &bufsize, stdin);
 		if (bytes_read == -1)
 		{
-			free(buffer);
 			handle_read_error();
-			break;
 		}
 		if (buffer[bytes_read - 1] == '\n')
+		{
 			buffer[bytes_read - 1] = '\0';
+		}
 		if (_strlen(buffer) > 0)
 			handle_command(buffer, argv[0], line_number);
+		if (!isatty(STDIN_FILENO))
+		{
+			free(buffer);
+			break;
+		}
 		free(buffer);
 		buffer = NULL;
 	}
-	free(buffer);
+	if (isatty(STDIN_FILENO))
+		free(buffer);
 	return (0);
 }
