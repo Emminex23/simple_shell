@@ -27,40 +27,46 @@ void handle_read_error(void)
  */
 void handle_command(char *buffer, char *program_name, int line_number)
 {
+	int i;
 	ssize_t status;
 	char line_str[12];
-	int i, len = 0;
-	int temp = line_number;
+	char error_msg[BUFFERSIZE];
 
-	do {
-		len++;
-		temp /= 10;
-	} while (temp);
+	command_t builtins[] = {
+		{"exit", exit_shell},
+		{"env", print_env},
+		{NULL, NULL}
+		};
 
-	for (i = len - 1; i >= 0; i--)
-	{
-		line_str[i] = (line_number % 10) + '0';
-		line_number /= 10;
-	}
-	line_str[len] = '\0';
+	sprintf(line_str, "%d", line_number);
 
-	if (_strcmp(buffer, "exit") == 0)
+	for (i = 0; builtins[i].name; i++)
 	{
-		exit_shell();
+		if (_strcmp(buffer, builtins[i].name) == 0)
+		{
+			builtins[i].func();
+			return;
+		}
 	}
-	if (_strcmp(buffer, "env") == 0)
-	{
-		print_env();
-		return;
-	}
+
 	status = exe(buffer);
 	if (status == -1)
 	{
-		write(STDERR_FILENO, program_name, _strlen(program_name));
-		write(STDERR_FILENO, ": ", 2);
-		write(STDERR_FILENO, line_str, len);
-		write(STDERR_FILENO, ": ", 2);
-		write(STDERR_FILENO, buffer, _strlen(buffer));
-		write(STDERR_FILENO, ": not found\n", 12);
+		sprintf(error_msg, "%s: %s: %s: not found\n", program_name,
+		line_str, buffer);
+		write(STDERR_FILENO, error_msg, _strlen(error_msg));
 	}
+}
+
+/**
+ * sigint_handler - handles signals
+ * @sig: the signal
+ *
+ * Return: Nothing
+ */
+void sigint_handler(int sig)
+{
+	(void)sig;
+	write(STDOUT_FILENO, "\n($)", 4);
+	fflush(stdout);
 }

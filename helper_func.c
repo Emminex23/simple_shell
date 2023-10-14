@@ -62,25 +62,19 @@ char *_strdup(const char *src)
  * @dest: destination
  * @n: number of bytes
  *
- * Return: 0 if successful, -1 otherwise
+ * Return: dest
  */
-int _memcpy(void *dest, const void *src, size_t n)
+void *_memcpy(void *dest, const void *src, size_t n)
 {
-
 	size_t i;
 	char *d = (char *)dest;
 	const char *s = (const char *)src;
-
-	if (dest == NULL || src == NULL)
-	{
-		return (-1);
-	}
 
 	for (i = 0; i < n; i++)
 	{
 		d[i] = s[i];
 	}
-	return (0);
+	return (dest);
 }
 
 /**

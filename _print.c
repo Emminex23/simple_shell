@@ -7,11 +7,13 @@
  */
 unsigned int _strlen(const char *str)
 {
-	if (*str == '\0')
+	unsigned int len = 0;
+
+	while (*str++)
 	{
-		return (0);
+		len++;
 	}
-	return (1 + _strlen(str + 1));
+	return (len);
 }
 
 /**

@@ -11,6 +11,7 @@ int findpath(const char *command, char *path, size_t length)
 {
 	char *term, *penv = NULL, *pcopy = NULL;
 	unsigned int i, termlen, comlen, plen;
+	struct stat buf;
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
@@ -36,7 +37,8 @@ int findpath(const char *command, char *path, size_t length)
 			path[termlen] = '/';
 			_memcpy(path + termlen + 1, command, comlen);
 			path[plen] = '\0';
-			if (access(path, X_OK) == 0)
+			if (access(path, X_OK) == 0 && stat(path, &buf) == 0 &&
+			S_ISREG(buf.st_mode))
 			{
 				free(pcopy);
 				return (0);
