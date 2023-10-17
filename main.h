@@ -35,6 +35,7 @@ void clean_up_before_exit(void);
 void sigint_handler(int sig);
 char **parse_command(char *command, char **resolved_path_ref);
 int execute_command(char **input, char *resolved_path);
+ssize_t custom_getline(char **lineptr, size_t *n, FILE *stream);
 
 extern char **environ;
 

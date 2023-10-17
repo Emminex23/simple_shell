@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 			_print("($) ");
 			fflush(stdout);
 		}
-		bytes_read = getline(&buffer, &bufsize, stdin);
+		bytes_read = custom_getline(&buffer, &bufsize, stdin);
 		if (bytes_read == -1)
 		{
 			if (isatty(STDIN_FILENO))
