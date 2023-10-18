@@ -14,7 +14,7 @@ ssize_t custom_getline(char **lineptr, size_t *n, FILE *stream)
 {
 	size_t i = 0;
 	int c;
-	char *new_lineptr = (char *)realloc(*lineptr, *n);
+	char *new_lineptr;
 
 	if (*lineptr == NULL || *n == 0)
 	{
@@ -25,13 +25,16 @@ ssize_t custom_getline(char **lineptr, size_t *n, FILE *stream)
 			return (-1);
 		}
 	}
+
 	while ((c = fgetc(stream)) != EOF)
 	{
 		if (i + 1 >= *n)
 		{
 			*n += BUFFERSIZE;
+			new_lineptr = (char *)realloc(*lineptr, *n);
 			if (new_lineptr == NULL)
 			{
+				free(*lineptr);
 				return (-1);
 			}
 			*lineptr = new_lineptr;
@@ -41,12 +44,7 @@ ssize_t custom_getline(char **lineptr, size_t *n, FILE *stream)
 		{
 			(*lineptr)[i] = '\0';
 			return (i);
-		}
-	}
-	if (i > 0)
-	{
-		(*lineptr)[i] = '\0';
-		return (i);
+			}
 	}
 	return (-1);
 }
