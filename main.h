@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdarg.h>
 
 /*Macros*/
 #define MAX 1024
@@ -37,6 +38,9 @@ char **parse_command(char *command, char **resolved_path_ref);
 int execute_command(char **input, char *resolved_path);
 ssize_t custom_getline(char **lineptr, size_t *n, FILE *stream);
 char *tokenisation(char *str, char delimiter);
+void *_realloc(void *ptr, size_t new_size);
+int _sprintf(char *buf, const char *format, ...);
+
 extern char **environ;
 
 /**

@@ -38,7 +38,7 @@ void handle_command(char *buffer, char *program_name, int line_number)
 		{NULL, NULL}
 		};
 
-	sprintf(line_str, "%d", line_number);
+	_sprintf(line_str, "%d", line_number);
 
 	for (i = 0; builtins[i].name; i++)
 	{
@@ -52,7 +52,7 @@ void handle_command(char *buffer, char *program_name, int line_number)
 	status = exe(buffer);
 	if (status == -1)
 	{
-		sprintf(error_msg, "%s: %s: %s: not found\n", program_name,
+		_sprintf(error_msg, "%s: %s: %s: not found\n", program_name,
 		line_str, buffer);
 		write(STDERR_FILENO, error_msg, _strlen(error_msg));
 	}

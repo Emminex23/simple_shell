@@ -1,11 +1,10 @@
 #include "main.h"
 
-/*
+/**
  * tokenisation - Tokenizes string
  *
  * @str: input string
- * @delimeter: constant char separating string
- * @new_token: output tokens
+ * @delimiter: constant char separating string
  *
  * Return: pointer to next token or NULL if theres no tokens
  */

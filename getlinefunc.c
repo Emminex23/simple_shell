@@ -1,6 +1,6 @@
 #include "main.h"
 
-/*
+/**
  * custom_getline - reads line from input stream and counts char
  *
  * @lineptr:pointer to memory location of line text to be read
@@ -31,7 +31,7 @@ ssize_t custom_getline(char **lineptr, size_t *n, FILE *stream)
 		if (i + 1 >= *n)
 		{
 			*n += BUFFERSIZE;
-			new_lineptr = (char *)realloc(*lineptr, *n);
+			new_lineptr = (char *)_realloc(*lineptr, *n);
 			if (new_lineptr == NULL)
 			{
 				free(*lineptr);
