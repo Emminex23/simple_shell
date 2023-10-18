@@ -26,7 +26,7 @@ int findpath(const char *command, char *path, size_t length)
 	pcopy = _strdup(penv);
 	if (!pcopy)
 		return (-1);
-	term = strtok(pcopy, ":");
+	term = tokenisation(pcopy, ':');
 	while (term != NULL)
 	{
 		termlen = _strlen(term), comlen = _strlen(command);
@@ -44,7 +44,7 @@ int findpath(const char *command, char *path, size_t length)
 				return (0);
 			}
 		}
-		term = strtok(NULL, ":");
+		term = tokenisation(NULL, ':');
 	}
 	free(pcopy);
 	return (-1);
