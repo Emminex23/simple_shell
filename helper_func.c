@@ -107,5 +107,5 @@ char *_strncpy(char *dest, const char *src, size_t n)
  */
 void exit_shell(void)
 {
-	clean_up_before_exit();
+	exit(EXIT_SUCCESS);
 }
